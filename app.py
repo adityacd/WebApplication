@@ -7,6 +7,7 @@ from .models import Cats, db
 
 app = create_app()
 
+
 @app.route('/', methods=['GET'])
 def fetch():
     cats = Cats.query.all()
@@ -22,6 +23,7 @@ def fetch():
         all_cats.append(new_cat)
     return json.dumps(all_cats), 200
 
+
 @app.route('/', methods=['POST'])
 def add():
     data = request.get_json()
@@ -34,11 +36,13 @@ def add():
     db.session.commit()
     return json.dumps("Added"), 200
 
+
 @app.route('/remove/<cat_id>', methods=['DELETE'])
 def remove(cat_id):
     Cats.query.filter_by(id=cat_id).delete()
     db.session.commit()
     return json.dumps("Deleted"), 200
+
 
 @app.route('edit/<cat_id>', methods=['PATCH'])
 def edit(cat_id):
